@@ -1,5 +1,11 @@
 package sf.git;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import sf.git.serialiser.LocalDateTimeDeserializer;
+import sf.git.serialiser.LocalDateTimeSerializer;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -13,6 +19,8 @@ public class Commit {
 
     private String hash ;
     private String author ;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime date ;
     private List<String> comments ;
 
@@ -106,6 +114,10 @@ public class Commit {
 
     @Override
     public String toString() {
+
+ //       String jsonInString = mapper.writeValueAsString(this);
+
+        //writerWithView(Views.NameOnly.class).writeValueAsString(user);
         return "Commit{" +
                 "\nhash='" + hash + '\'' +
                 "\nauthor='" + author + '\'' +

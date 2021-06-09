@@ -1,5 +1,7 @@
 package sf.git;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,8 +15,9 @@ import java.util.Map;
 public class App 
 {
 
-
     public static void main(String[] args) {
+        ObjectMapper mapper = new ObjectMapper();
+
         try {
                 Collection<File> all = new ArrayList<File>();
                 addTree(new File("git-log"), all);
@@ -27,8 +30,10 @@ public class App
                     Map<String,Commit> commitsSet = getCommitMap(in);
                     System.out.println("ff ddddc " + ff.getName() +  "          "+commitsSet.entrySet().size());
                     System.out.println("-------------------------------------------------------------------------------");
+                    String jsonString = mapper.writeValueAsString(commitsSet);
+                    System.out.println(jsonString);
                     for (Map.Entry<String,Commit> commitsEntry :commitsSet.entrySet()){
-                        System.out.println("entry "+commitsEntry.getKey() +" "+commitsEntry.getValue().getDate());//.getAuthor());
+                    //    System.out.println("entry "+commitsEntry.getKey() +" "+commitsEntry.getValue().getDate());//.getAuthor());
 
                     }
                     System.out.println("ff ddddc " + ff.getName() +  "          "+commitsSet.entrySet().size());
